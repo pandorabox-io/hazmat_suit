@@ -6,6 +6,15 @@ if not minetest.get_modpath("technic") then
 	return
 end
 
+-- settings
+
+-- default to true for water-protection
+local enable_water_protection = not minetest.settings:get("hazmat_suit.enable_water_protection") == "false"
+
+-- radiation protection value
+local radiation_protection = tonumber(minetest.settings:get("hazmat_suit.radiation_protection")) or 50
+
+-- crafts
 minetest.register_craftitem("hazmat_suit:helmet_hazmat", {
 		description = S("Hazmat Helmet"),
 		inventory_image = "hazmat_suit_inv_helmet_hazmat.png",
@@ -36,13 +45,28 @@ minetest.register_craftitem("hazmat_suit:boots_hazmat", {
 		stack_max = 1,
 })
 
+local hazmat_suit_groups = {
+	armor_head=1,
+	armor_torso=1,
+	armor_legs=1,
+	armor_feet=1,
+	armor_heal=20,
+	armor_fire=4,
+	armor_use=1000,
+	physics_jump=-0.1,
+	physics_speed=-0.2,
+	physics_gravity=0.1
+}
+
+if enable_water_protection then
+	hazmat_suit_groups.armor_water = 1
+end
+
 armor:register_armor("hazmat_suit:suit_hazmat", {
 	description = S("Hazmat Suit"),
 	inventory_image = "hazmat_suit_inv_suit_hazmat.png",
-	groups = {armor_head=1, armor_torso=1, armor_legs=1, armor_feet=1,
-		armor_heal=20, armor_fire=4, armor_water=1, armor_use=1000,
-		physics_jump=-0.1, physics_speed=-0.2, physics_gravity=0.1},
-	armor_groups = {fleshy=35, radiation=50},
+	groups = hazmat_suit_groups,
+	armor_groups = {fleshy=35, radiation=radiation_protection},
 	damage_groups = {cracky=3, snappy=3, choppy=2, crumbly=2, level=1},
 })
 

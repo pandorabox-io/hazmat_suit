@@ -10,3 +10,8 @@ Requires technic mod.
 Depends: 3d_armor, technic
 
 Textures by HybridDog and numberZero
+
+# Settings
+
+* `hazmat_suit.enable_water_protection` enable water protection (true or false, default to true)
+* `hazmat_suit.radiation_protection` radiation protection value (defaults to 50, higher = more protection)
