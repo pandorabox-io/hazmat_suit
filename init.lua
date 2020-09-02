@@ -1,5 +1,5 @@
 -- support for i18n
-local S = armor_i18n.gettext
+local S = minetest.get_translator("3d_armor")
 
 if not minetest.get_modpath("technic") then
 	minetest.log("warning", S("hazmat_suit: Mod loaded but unused."))
